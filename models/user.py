@@ -1,9 +1,9 @@
 from typing import Union
 
-from fastapi import FastAPI
+from fastapi import APIRouter
 from pydantic import BaseModel, EmailStr
 
-app = FastAPI()
+router = APIRouter()
 
 
 class UserIn(BaseModel):
@@ -14,7 +14,7 @@ class UserIn(BaseModel):
     balance: float = 0.0
 
 
-class UserOut(BaseModel):
+class User(BaseModel):
     username: str
     email: EmailStr
     full_name: Union[str, None] = None
@@ -40,7 +40,7 @@ def fake_save_user(user_in: UserIn):
     return user_in_db
 
 
-@app.post("/user/", response_model=UserOut)
+@router.post("/user/", response_model=User)
 async def create_user(user_in: UserIn):
     user_saved = fake_save_user(user_in)
     return user_saved
