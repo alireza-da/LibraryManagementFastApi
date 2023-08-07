@@ -1,10 +1,18 @@
 from sqlalchemy.orm import Session
 from models.user import *
 import models.schemas as schemas
+from models.user import convert_db_user_to_model
+from fastapi import APIRouter, Body, Depends
+from apis import deps
+
+router = APIRouter()
 
 
-def get_user(db: Session, user_id: int):
-    return db.query(User).filter(User.id == user_id).first()
+@router.get('/get-user')
+def get_user(user_id: int, db: Session = Depends(deps.get_db)) -> dict:
+    user = db.query(schemas.User).filter(schemas.User.id == user_id).first()
+    print(convert_db_user_to_model(user))
+    return {"header": "asdjkalsd"}
 
 
 def get_user_by_email(db: Session, email: str):
@@ -22,4 +30,3 @@ def create_user(db: Session, user: schemas.User):
     db.commit()
     db.refresh(db_user)
     return db_user
-

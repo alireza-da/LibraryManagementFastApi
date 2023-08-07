@@ -1,6 +1,6 @@
 import datetime
 
-from models.user import UserOut
+from models.user import User
 
 
 class Category:
@@ -16,7 +16,7 @@ class Book:
 
 class TakenBook:
     book: Book
-    user: UserOut
+    user: User
     taken_date: datetime.datetime
     returning_date: datetime.datetime
     bill: float = 0.0

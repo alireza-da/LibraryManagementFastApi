@@ -14,4 +14,4 @@ async def say_hello(name: str):
     return {"message": f"Hello {name}"}
 
 
-app.include_router(router.api_router, prefix='api')
+app.include_router(router.api_router, prefix='/api')

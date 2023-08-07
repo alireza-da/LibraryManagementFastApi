@@ -1,7 +1,6 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float
-from sqlalchemy.orm import relationship
 
-from database import Base
+from db.database import Base
 
 
 class User(Base):
@@ -9,6 +8,9 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
+    fullname = Column(String)
+    username = Column(String)
+    balance = Column(Float)
     is_active = Column(Boolean, default=True)
 
 
@@ -31,6 +33,7 @@ class Book(Base):
 
 class TakenBook(Base):
     __tablename__ = "takenbooks"
+    id = Column(Integer, primary_key=True, index=True)
     book = ForeignKey("Book")
     user = ForeignKey("User")
     taken_date = Column(String, index=True)
